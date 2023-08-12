@@ -1,0 +1,67 @@
+{
+  "name": "analog-prisma-tprc",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "./analog-prisma-tprc/src",
+  "targets": {
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": [
+        "{options.outputPath}",
+        "dist/./analog-prisma-tprc/.nitro",
+        "dist/./analog-prisma-tprc/ssr",
+        "dist/./analog-prisma-tprc/analog"
+      ],
+      "options": {
+        "main": "./analog-prisma-tprc/src/main.ts",
+        "configFile": "./analog-prisma-tprc/vite.config.ts",
+        "outputPath": "dist/./analog-prisma-tprc/client"
+      },
+      "defaultConfiguration": "production",
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "sourcemap": false,
+          "mode": "production"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "analog-prisma-tprc:build",
+        "port": 4200
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "analog-prisma-tprc:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "analog-prisma-tprc:build:production"
+        }
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "analog-prisma-tprc:build"
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["./analog-prisma-tprc/coverage"]
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["./analog-prisma-tprc/**/*.{ts,html}"]
+      }
+    }
+  },
+  "tags": []
+}
